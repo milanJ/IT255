@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>BuboReporter</title>
+        <link rel = "stylesheet" href = "style.css" type = "text/css">
+<!--        https://ionicons.com      https://www.webfx.com/blog/web-design/free-icon-fonts  -->
+        <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,700,700i,900,900i&display=swap" rel="stylesheet">
+        <meta charset = "UTF-8">
+        
+        <script type="text/javascript">
+            function processSubmit(event){
+                event.preventDefault(); 
+                
+                // Get form data:
+                var form = document.forms["content_input_form"];
+                var type = form["type"].value;
+                var count = form["count"].value;
+                var location = form["location"].value;
+                var severity = form["severity"].value;
+                
+                // Clear form inputs:
+                form["type"].value = "";
+                form["count"].value = "10";
+                form["location"].value = "";
+                form["severity"].value = "green";
+                
+                // Get flex container and insert new bug:
+                var html_to_insert = "<div class = \"bug_entry\" style=\"background-color: "
+                    + severity 
+                    + ";\">"
+                    + count
+                    + " "
+                    + type
+                    + "<br>"
+                    + "u<br>"
+                    + location
+                    + "<br></div>";
+                
+                var bugsContainer = document.getElementById('bugs_container');
+                bugsContainer.innerHTML = bugsContainer.innerHTML + html_to_insert;
+                
+                return false;
+            }
+        </script>
+    </head>
+    <body>
+        <div id = "header">
+            <span id="header_title">BuboReporter</span>
+        </div>
+    
+        <div id = "content_input" style="margin-top: 12px">
+            <form id = "content_input_form" name="content_input_form" onsubmit="return processSubmit(event)" >
+                <span class="input_caption">Vrsta bube:</span><br>
+                <input class="content_input_form_input" type="text" name="type" required>
+                <br>
+                <br>
+                <span class="input_caption">Brojnost:</span><br>
+                <input class="content_input_form_input" type="number" name="count" min="10" step="10" value="10" required>
+                <br>
+                <br>
+                <span class="input_caption">Lokacija:</span><br>
+                <input class="content_input_form_input" type="text" name="location" required>
+                <br>
+                <br>
+                <span class="input_caption">Problematičnost:</span><br>
+                <select class="content_input_form_select" name="severity" required>
+                    <option class="content_input_form_select_option" style="color: lawngreen" value="lawngreen">Korisne</option>
+                    <option class="content_input_form_select_option" style="color: yellow" value="yellow">Pomalo Dosadne</option>
+                    <option class="content_input_form_select_option" style="color: darkorange" value="orange">Problem U Nastanku</option>
+                    <option class="content_input_form_select_option" style="color: red" value="red">Eliminisati Odmah</option>
+                </select>
+                
+                <br><br><br>
+                <div style="text-align: center;">
+                    <input type="submit" value="DODAJ">
+                </div>
+         
+            </form>
+        </div> 
+        
+        <hr style="margin-top: 18px; margin-bottom: 18px;">
+        
+        <div id = "bugs_container" style="margin-top: 16px">
+        </div>
+    </body>
+</html>
